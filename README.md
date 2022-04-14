@@ -1,46 +1,24 @@
-# Getting Started with Create React App
+# Consumindo Pacotes Locais
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+> Esse é um exemplo de como consumir pacotes locais.
 
-## Available Scripts
+## Motivaçao
+Algumas ferramentas de análise de qualidade como por exemplo o SonarQube apontam como problema o import de módulos que não estão definidos como dependência no package.json.
 
-In the project directory, you can run:
+Exemplo:
+```
+import Modal from 'components/modal'
+```
 
-### `npm start`
+Esse tipo de import pode ocorrer quando temos por exemplo uma biblioteca de componentes do próprio projeto e por questões de simplicidade não desejamos publica-la em um registry.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Solução
+Existem várias formas de contornar isso e uma delas é instalar a sua biblioteca local com o ``file:`` no package.json.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Para isso:
+1. Crie um arquivo ``package.json`` na raiz da sua biblioteca. Coloque algo significativo na propriedade name dele. Ex: my-awesome-components;
+2. Adicione como dependência no package.json da aplicação da seguinte forma: ``"my-awesome-components": "file:./src/my-awesome-components"``.
+3. Rode ``npm install`` na sua aplicação.
+4. Agora é só importar o modulo como um pacote normal: ``import CompB from 'my-awesome-components/comp-b';``
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+Veja os arquivos ``src/package.json``, ``src/my-awesomne-components/package.json`` e ``src/App.tsx`` pra mais detalhes.
